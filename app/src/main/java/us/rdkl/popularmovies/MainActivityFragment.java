@@ -46,7 +46,7 @@ public class MainActivityFragment extends Fragment {
 
         mMovieAdapter = new ArrayAdapter<Movie>(
                 getActivity(), // The current context (this activity)
-                R.layout.fragment_main, // The name of the layout ID.
+                R.layout.list_item_movie, // The name of the layout ID.
                 movies);
 
         return rootView;
