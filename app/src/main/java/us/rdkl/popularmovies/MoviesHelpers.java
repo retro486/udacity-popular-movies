@@ -18,6 +18,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by russ on 12/13/15.
@@ -100,11 +101,11 @@ public class MoviesHelpers {
         }
     }
 
-    public static ArrayList<Movie> processMovieJSON(String jsonString)
+    public static List<Movie> processMovieJSON(String jsonString)
             throws JSONException {
         final String LOG_TAG = "MovieHelpers.processMovieJSON";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        ArrayList<Movie> movies = new ArrayList<Movie>();
+        List<Movie> movies = new ArrayList<Movie>();
 
         JSONObject data = new JSONObject(jsonString);
         JSONArray results = data.getJSONArray("results");

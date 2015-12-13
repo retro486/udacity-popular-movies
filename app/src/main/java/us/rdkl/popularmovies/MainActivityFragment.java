@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -34,14 +35,25 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        setHasOptionsMenu(true);
+
+        List<Movie> movies = new ArrayList<Movie>();
+
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        mMovieAdapter = new ArrayAdapter<Movie>(
+                getActivity(), // The current context (this activity)
+                R.layout.fragment_main, // The name of the layout ID.
+                movies);
+
+        return rootView;
     }
 
-    public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
+    public class FetchMoviesTask extends AsyncTask<String, Void, List<Movie>> {
         private final String LOG_TAG = this.getClass().getSimpleName();
 
         @Override
-        protected ArrayList<Movie> doInBackground(String... params) {
+        protected List<Movie> doInBackground(String... params) {
             if(params.length != 2) {
                 return null;
             }
@@ -59,7 +71,7 @@ public class MainActivityFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Movie> movies) {
+        protected void onPostExecute(List<Movie> movies) {
             super.onPostExecute(movies);
 
             if(movies != null) {
@@ -67,5 +79,16 @@ public class MainActivityFragment extends Fragment {
                 mMovieAdapter.addAll(movies);
             }
         }
+    }
+
+    public void reloadMovies() {
+        // TODO grab sort from config
+        new FetchMoviesTask().execute("popularity.desc");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        reloadMovies();
     }
 }
