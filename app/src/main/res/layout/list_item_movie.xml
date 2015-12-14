@@ -47,5 +47,7 @@
             android:layout_height="wrap_content"
             android:text="4.3"
             android:id="@+id/movie_rating" />
+
+        // No Plot summary in this view
     </LinearLayout>
 </LinearLayout>

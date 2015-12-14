@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,13 +26,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
 
-    ArrayAdapter<Movie> mMovieAdapter;
+    private SimpleAdapter mMovieAdapter;
+    private List<Movie> mMovieList;
 
     public MainActivityFragment() {
     }
@@ -40,14 +44,17 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        List<Movie> movies = new ArrayList<Movie>();
+        mMovieList = new ArrayList<Movie>();
+        Movie templateMovie = new Movie();
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        mMovieAdapter = new ArrayAdapter<Movie>(
-                getActivity(), // The current context (this activity)
-                R.layout.list_item_movie, // The name of the layout ID.
-                movies);
+        String[] from = {"posterUrl", "title", "releaseDate", "rating"}; // Hardcoded to ensure order
+        int[] to = {R.id.movie_poster_image, R.id.movie_title, R.id.movie_release_date, R.id.movie_rating};
+        mMovieAdapter = new SimpleAdapter(getContext(), (List<? extends Map<String, ?>>) mMovieList, R.layout.list_item_movie, from, to);
+
+        ListView listView = (ListView) rootView.findViewById(R.id.listview_movies);
+        listView.setAdapter(mMovieAdapter);
 
         return rootView;
     }
@@ -62,7 +69,6 @@ public class MainActivityFragment extends Fragment {
             }
 
             String jsonData = MoviesHelpers.getMovieData(params[0]);
-            ArrayList<Movie> movies;
 
             try {
                 return MoviesHelpers.processMovieJSON(jsonData);
@@ -78,8 +84,8 @@ public class MainActivityFragment extends Fragment {
             super.onPostExecute(movies);
 
             if(movies != null) {
-                mMovieAdapter.clear();
-                mMovieAdapter.addAll(movies);
+                mMovieList = movies;
+                mMovieAdapter.notifyDataSetChanged();
             }
         }
     }
