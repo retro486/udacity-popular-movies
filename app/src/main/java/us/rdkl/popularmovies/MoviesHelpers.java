@@ -1,8 +1,6 @@
 package us.rdkl.popularmovies;
 
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.text.format.Time;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -14,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -108,22 +107,29 @@ public class MoviesHelpers {
         final String LOG_TAG = "MovieHelpers.processMovieJSON";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         List<Movie> movies = new ArrayList<Movie>();
+        Uri.Builder builder;
+        JSONObject obj;
 
         JSONObject data = new JSONObject(jsonString);
         JSONArray results = data.getJSONArray("results");
 
         for(int i = 0; i < results.length(); i++) {
-            JSONObject obj = results.getJSONObject(i);
-            String title;
             String posterUrl;
-            String plot;
-            Double rating;
             Date releaseDate;
+            obj = results.getJSONObject(i);
+            String title = obj.getString("original_title");;
+            String plot = obj.getString("overview");
+            Double rating = obj.getDouble("vote_average");
 
-            title = obj.getString("original_title");
-            posterUrl = obj.getString("poster_path"); // TODO prefix
-            plot = obj.getString("overview");
-            rating = obj.getDouble("vote_average");
+            builder = new Uri.Builder();
+            builder
+                    .scheme("http")
+                    .authority("image.tmdb.org")
+                    .appendPath("t")
+                    .appendPath("p")
+                    .appendPath("w185");
+            posterUrl = builder.build().toString() + obj.getString("poster_path");
+
             try {
                 releaseDate = sdf.parse(obj.getString("release_date"));
             } catch(java.text.ParseException e) {

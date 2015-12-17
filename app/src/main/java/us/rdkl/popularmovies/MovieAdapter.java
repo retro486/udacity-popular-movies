@@ -1,9 +1,7 @@
 // Based on https://nickcharlton.net/posts/building-custom-android-listviews.html
 package us.rdkl.popularmovies;
 
-import android.app.ListActivity;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -84,6 +81,9 @@ public class MovieAdapter extends BaseAdapter {
 
         field = (TextView) view.findViewById(R.id.movie_release_date);
         field.setText(item.getReleaseDateString());
+
+        field = (TextView) view.findViewById(R.id.movie_plot);
+        field.setText(item.getPlot());
 
         ImageView poster = (ImageView) view.findViewById(R.id.movie_poster_image);
         Picasso.with(view.getContext()).load(item.getPosterUrl()).into(poster);
