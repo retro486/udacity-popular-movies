@@ -37,21 +37,30 @@ public class MainActivityFragment extends Fragment {
     private List<Movie> mMovieList;
 
     public MainActivityFragment() {
+        final String LOG_TAG = this.getClass().getSimpleName();
+        Log.i(LOG_TAG, "Loaded initializer");
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
+
+        final String LOG_TAG = this.getClass().getSimpleName();
+        Log.i(LOG_TAG, "Loaded onCreate");
+
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-
         mMovieList = new ArrayList<Movie>();
-        Movie templateMovie = new Movie();
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         String[] from = {"posterUrl", "title", "releaseDate", "rating"}; // Hardcoded to ensure order
         int[] to = {R.id.movie_poster_image, R.id.movie_title, R.id.movie_release_date, R.id.movie_rating};
-        mMovieAdapter = new SimpleAdapter(getContext(), (List<? extends Map<String, ?>>) mMovieList, R.layout.list_item_movie, from, to);
+        mMovieAdapter = new SimpleAdapter(rootView.getContext(), mMovieList, R.layout.list_item_movie, from, to);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listview_movies);
         listView.setAdapter(mMovieAdapter);
