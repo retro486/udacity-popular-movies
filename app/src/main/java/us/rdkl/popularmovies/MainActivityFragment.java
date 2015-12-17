@@ -1,6 +1,8 @@
 package us.rdkl.popularmovies;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -85,8 +87,10 @@ public class MainActivityFragment extends Fragment {
     }
 
     public void reloadMovies() {
-        // TODO grab sort from config
-        new FetchMoviesTask().execute("popularity.desc");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String sort = prefs.getString(getString(R.string.sort_pref_key), "popularity.desc");
+
+        new FetchMoviesTask().execute(sort);
     }
 
     @Override
