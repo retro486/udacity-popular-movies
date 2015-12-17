@@ -61,6 +61,7 @@ public class MoviesHelpers {
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
+                Log.i(LOG_TAG, "No data returned.");
                 // Nothing to do.
                 return null;
             }
@@ -76,6 +77,7 @@ public class MoviesHelpers {
 
             if (buffer.length() == 0) {
                 // Stream was empty.  No point in parsing.
+                Log.i(LOG_TAG, "No data to read.");
                 return null;
             }
             forecastJsonStr = buffer.toString();
@@ -128,7 +130,8 @@ public class MoviesHelpers {
                 releaseDate = null;
             }
 
-            movies.add(new Movie(title, posterUrl, plot, rating, releaseDate));
+            Movie movie = new Movie(title, posterUrl, plot, rating, releaseDate);
+            movies.add(movie);
         }
 
         return movies;
