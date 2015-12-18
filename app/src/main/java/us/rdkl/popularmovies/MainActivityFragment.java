@@ -1,6 +1,8 @@
 package us.rdkl.popularmovies;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -12,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONException;
@@ -46,6 +49,16 @@ public class MainActivityFragment extends Fragment {
 
         ListView listView = (ListView) rootView.findViewById(R.id.listview_movies);
         listView.setAdapter(mMovieAdapter);
+
+        listView.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Movie movie = (Movie) adapterView.getItemAtPosition(position);
+                Intent showMovieIntent = new Intent(getActivity(), MovieDetailsActivity.class);
+//                showMovieIntent.putExtra("movie", movie);
+                startActivity(showMovieIntent);
+            }
+        });
 
         return rootView;
     }

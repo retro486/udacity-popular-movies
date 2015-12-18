@@ -2,6 +2,7 @@ package us.rdkl.popularmovies;
 
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.Set;
  * Created by russ on 12/13/15.
  */
 // TODO implement Parcelable
-public class Movie implements Map<String, String> {
+public class Movie implements Map<String, String>, Serializable {
     private String mTitle;
     private String mPosterUrl;
     private String mPlot;

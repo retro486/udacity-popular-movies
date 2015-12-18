@@ -16,4 +16,5 @@
         <item>popularity.desc</item>
         <item>vote_average.desc</item>
     </string-array>
+    <string name="title_activity_movie_details">Details</string>
 </resources>

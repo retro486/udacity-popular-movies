@@ -26,6 +26,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="us.rdkl.popularmovies.MainActivity" />
         </activity>
+        <activity
+            android:name=".MovieDetailsActivity"
+            android:label="@string/title_activity_movie_details"
+            android:icon="@drawable/ic_placeholder"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="us.rdkl.popularmovies.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
