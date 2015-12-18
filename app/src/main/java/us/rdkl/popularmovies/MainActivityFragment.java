@@ -55,7 +55,7 @@ public class MainActivityFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Movie movie = (Movie) adapterView.getItemAtPosition(position);
                 Intent showMovieIntent = new Intent(getActivity(), MovieDetailsActivity.class);
-//                showMovieIntent.putExtra("movie", movie);
+                showMovieIntent.putExtra("movie", movie);
                 startActivity(showMovieIntent);
             }
         });
