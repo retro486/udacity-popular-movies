@@ -41,7 +41,7 @@ public class MovieDetailsActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
             Intent intent = getActivity().getIntent();
-//            Movie movie = (Movie) intent.getSerializableExtra("movie"); // TODO switch this to parcelable once Movie is updated
+//            Movie movie = (Movie) intent.getSerializableExtra("movie"); // TODO use a db instead and pass DB index of selected item
 // TODO
 //            TextView tv = (TextView) rootView.findViewById(R.id.weather_details);
 //            if(tv != null) {
