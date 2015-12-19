@@ -110,6 +110,10 @@ public class MoviesHelpers {
         Uri.Builder builder;
         JSONObject obj;
 
+        if(jsonString == null) {
+            return movies;
+        }
+
         JSONObject data = new JSONObject(jsonString);
         JSONArray results = data.getJSONArray("results");
 

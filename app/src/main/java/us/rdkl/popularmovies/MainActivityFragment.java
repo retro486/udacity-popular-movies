@@ -1,7 +1,10 @@
 package us.rdkl.popularmovies;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import java.util.ArrayList;
@@ -69,6 +73,17 @@ public class MainActivityFragment extends Fragment {
         reloadMovies();
     }
 
+    public boolean isOnline(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
+    }
+
     public class FetchMoviesTask extends AsyncTask<String, Void, List<Movie>> {
         private final String LOG_TAG = this.getClass().getSimpleName();
 
@@ -103,7 +118,12 @@ public class MainActivityFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         String sort = prefs.getString(getString(R.string.sort_pref_key), "popularity.desc");
 
-        new FetchMoviesTask().execute(sort);
+        if(isOnline(getContext())) {
+            new FetchMoviesTask().execute(sort);
+        } else {
+            Toast toast = Toast.makeText(getContext(), R.string.disconnected_message, Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
     @Override
