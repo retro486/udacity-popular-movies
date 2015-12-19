@@ -76,6 +76,10 @@ public class Movie implements Serializable {
     }
 
     public String getReleaseDateString() {
+        if(getReleaseDate() == null) {
+            return "(No date)";
+        }
+        
         SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy");
         return sdf.format(getReleaseDate());
     }

@@ -77,10 +77,18 @@ public class MovieAdapter extends BaseAdapter {
         field.setText(item.getTitle());
 
         field = (TextView) view.findViewById(R.id.movie_rating);
-        field.setText(item.getRatingString());
+        if(item.getRating() == null) {
+            field.setVisibility(View.GONE);
+        } else {
+            field.setText(item.getRatingString());
+        }
 
         field = (TextView) view.findViewById(R.id.movie_release_date);
-        field.setText(item.getReleaseDateString());
+        if(item.getReleaseDate() == null) {
+            field.setVisibility(View.GONE);
+        } else {
+            field.setText(item.getReleaseDateString());
+        }
 
         field = (TextView) view.findViewById(R.id.movie_plot);
         field.setText(item.getPlot());
